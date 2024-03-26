@@ -57,6 +57,16 @@ public class ClienteServiceTeste {
 		 
 	}
 	
+	
+	@Test
+	public void alterarCliente() {
+	    cli.setNome("Felipe batista");
+		cliService.alterar(cli);
+		Assert.assertEquals("Felipe batista", cli.getNome());
+		 
+	}
+	
+	
 
 	
 }

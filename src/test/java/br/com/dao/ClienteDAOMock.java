@@ -5,7 +5,8 @@ import br.com.domain.Cliente;
 public class ClienteDAOMock implements IClienteDAO {
 
 	@Override
-	public void salvar(Cliente cli) {
+	public Boolean salvar(Cliente cli) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}
@@ -20,6 +21,12 @@ public class ClienteDAOMock implements IClienteDAO {
 	@Override
 	public Boolean excluir(Cliente cli) {
 		return true;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void alterar(Cliente cli) {
 		// TODO Auto-generated method stub
 		
 	}

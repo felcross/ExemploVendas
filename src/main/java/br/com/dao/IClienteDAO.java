@@ -4,10 +4,12 @@ import br.com.domain.Cliente;
 
 public interface IClienteDAO {
 
-	void salvar(Cliente cli);
+	Boolean salvar(Cliente cli);
 	
 	Cliente buscarPorCpf(Long cpf);
 
 	Boolean excluir(Cliente cli);
+	
+	void alterar(Cliente cli);
 
 }

@@ -33,4 +33,11 @@ public class ClienteService implements IClienteService {
 		return true;
 	}
 
+
+	@Override
+	public void alterar(Cliente cli) {
+		cliDao.alterar(cli);
+		
+	}
+
 }

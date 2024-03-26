@@ -39,10 +39,26 @@ public class ClienteDAOTeste {
 		
 	};
 	
+	
+	@Test
+	public void salvarCliente() {
+		Boolean retorno = cliDAO.salvar(cli);
+		Assert.assertTrue(retorno);
+		 
+	}
+	
 	@Test
 	public void excluirCliente() {
 		Boolean retorno = cliDAO.excluir(cli);
 		Assert.assertTrue(retorno);
+		 
+	}
+	
+	@Test
+	public void alterarCliente() {
+	    cli.setNome("Felipe batista");
+	    cliDAO.alterar(cli);
+		Assert.assertEquals("Felipe batista", cli.getNome());
 		 
 	}
 	
