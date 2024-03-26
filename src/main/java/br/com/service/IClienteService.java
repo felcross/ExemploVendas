@@ -4,9 +4,11 @@ import br.com.domain.Cliente;
 
 public interface IClienteService {
 
-	void salvar(Cliente cli);
+	Boolean salvar(Cliente cli);
 
 	Cliente buscarPorCpf(Long cpf);
+
+	Boolean excluir(Cliente cli);
 
     
 	

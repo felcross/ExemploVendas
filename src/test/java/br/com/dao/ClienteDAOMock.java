@@ -2,7 +2,7 @@ package br.com.dao;
 
 import br.com.domain.Cliente;
 
-public class ClienteDao implements IClienteDao {
+public class ClienteDAOMock implements IClienteDAO {
 
 	@Override
 	public void salvar(Cliente cli) {
@@ -12,8 +12,16 @@ public class ClienteDao implements IClienteDao {
 
 	@Override
 	public Cliente buscarPorCpf(Long cpf) {
+		Cliente cli = new Cliente();
+		cli.setCpf(cpf);
+		return cli;
+	}
+
+	@Override
+	public Boolean excluir(Cliente cli) {
+		return true;
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }
