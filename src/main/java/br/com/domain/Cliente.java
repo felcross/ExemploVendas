@@ -13,6 +13,11 @@ public class Cliente {
 		this.codigo = codigo;
 		this.nome = nome;
 	}
+	public Cliente() {
+		
+	}
+	
+	
 	public Long getId() {
 		return id;
 	}
