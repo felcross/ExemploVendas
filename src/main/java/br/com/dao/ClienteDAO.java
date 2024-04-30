@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.domain.Cliente;
@@ -111,8 +112,35 @@ public class ClienteDAO implements IClienteDAO {
 	
 	@Override
 	public List<Cliente> buscarTodos() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = null;
+		PreparedStatement stm = null;
+		Cliente cli = null;
+		ResultSet rs = null;
+		List<Cliente> list = new ArrayList<>();
+		try {
+			 connection = ConnectionFactory.getConnection();
+		    	String sql = getSqlSelectAll();
+		    	stm =  connection.prepareStatement(sql);
+		    	rs = stm.executeQuery();
+		    	
+		    	while(rs.next()) {
+		    		cli = new Cliente();
+		    		Long id = rs.getLong("ID");
+		    		String nome = rs.getString("NOME");
+		    		String cd= rs.getString("CODIGO");
+		    		cli.setId(id);
+		    		cli.setCodigo(cd);
+		    		cli.setNome(nome);
+		    		list.add(cli);
+		    	}
+		    }
+		    catch(Exception e) {
+		    	throw e;
+		    } finally {
+		    	closeConnection(connection,stm,rs);
+		    	
+		    }
+		return list;
 	};
 	
 	
@@ -120,6 +148,13 @@ public class ClienteDAO implements IClienteDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO TB_CLIENTE (ID,CODIGO,NOME)");
 		sb.append("VALUES (nextval('TB_CLIENTE_ID_SEQ'),?,?)");
+		return sb.toString();
+	};
+	
+	
+	private String getSqlSelectAll() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM TB_CLIENTE");
 		return sb.toString();
 	};
 	
