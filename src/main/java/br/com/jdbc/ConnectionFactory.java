@@ -11,15 +11,16 @@ public class ConnectionFactory {
 	  private ConnectionFactory(Connection connection) {}
 
 	public static Connection getConnection() {
-		if(connection == null)
-		connection = initConnection();
+
+		if(connection == null) 
+		{connection = initConnection();}
 		return connection;
 	}
 
 	private static Connection initConnection() {
 		try {
 			 return DriverManager.getConnection(
-					 "jdbc:postgresql://localhost:5432/postgres","postgres","admin");
+					 "jdbc:postgresql://localhost:5432/postgres","postgres","fel123");
 		} 
 		catch(SQLException e) {
 			throw new RuntimeException(e);

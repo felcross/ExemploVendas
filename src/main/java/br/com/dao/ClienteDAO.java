@@ -72,8 +72,8 @@ public class ClienteDAO implements IClienteDAO {
 		    	if(rs.next()) {
 		    		cli = new Cliente();
 		    		Long id = rs.getLong("ID");
-		    		String nome = rs.getString("NOME");
 		    		String cd= rs.getString("CODIGO");
+		    		String nome = rs.getString("NOME");
 		    		cli.setId(id);
 		    		cli.setCodigo(cd);
 		    		cli.setNome(nome);
@@ -82,7 +82,8 @@ public class ClienteDAO implements IClienteDAO {
 		    catch(Exception e) {
 		    	throw e;
 		    }finally {
-		    	closeConnection(connection,stm,rs);}
+		    	closeConnection(connection,stm,rs);
+		    	 }
 	  return cli;	    	
 	};
 
