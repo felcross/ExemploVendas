@@ -23,18 +23,27 @@ public class ClienteTest {
 		System.out.println(cli.getCodigo()+"primeiro teste");
 		Integer countCad = clienteDao.cadastrar(cli);		
 		assertTrue(countCad == 1);
+		Cliente cli2 = new Cliente();	
+		 cli2 = clienteDao.buscar("10");
+		System.out.println(cli2.getCodigo());
+	 	assertNull(cli2);
+		assertEquals(cli.getCodigo(),cli2.getCodigo());
+		assertEquals(cli.getNome(),cli2.getNome());
 		
-		Cliente cliBD = clienteDao.buscar("10");
-		System.out.println(cliBD.getCodigo());
-	 	assertNull(cliBD);
-		assertEquals(cli.getCodigo(),cliBD.getCodigo());
-		assertEquals(cli.getNome(),cliBD.getNome());
-		
-		Integer countDel = clienteDao.excluir(cliBD);
+		Integer countDel = clienteDao.excluir(cli);
 		assertTrue(countDel == 1);
-		System.out.println();
+		System.out.println(); 
 		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

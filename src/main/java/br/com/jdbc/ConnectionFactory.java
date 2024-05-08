@@ -12,8 +12,8 @@ public class ConnectionFactory {
 
 	public static Connection getConnection() {
 
-		if(connection == null) 
-		{connection = initConnection();}
+		if(connection == null)  
+		{connection = initConnection();} 
 		return connection;
 	}
 

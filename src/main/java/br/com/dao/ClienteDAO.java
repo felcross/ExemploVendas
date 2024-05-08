@@ -169,8 +169,8 @@ public class ClienteDAO implements IClienteDAO {
 	
 	private String getSqlSelect() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT * FROM TB_CLIENTE");
-		sb.append("WHERE CODIGO = ?");
+		sb.append("SELECT * FROM TB_CLIENTE WHERE CODIGO = ?");
+	//	sb.append(" WHERE CODIGO = ?");
 		return sb.toString();
 	};
 	
@@ -195,8 +195,8 @@ public class ClienteDAO implements IClienteDAO {
 	
 	private String getSqlDelete() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM TB_CLIENTE");
-		sb.append("WHERE CODIGO = ?");
+		sb.append("DELETE FROM TB_CLIENTE WHERE CODIGO = ?");
+		//sb.append(" WHERE CODIGO = ?");
 		return sb.toString();
 	};
 	
