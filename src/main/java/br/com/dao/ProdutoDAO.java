@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.domain.Cliente;
+import br.com.domain.Produto;
 import br.com.jdbc.ConnectionFactory;
 
-public class ClienteDAO implements IClienteDAO {
+public class ProdutoDAO implements IProdutoDAO {
 
 	@Override
-	public Integer cadastrar(Cliente cli) throws Exception{
+	public Integer cadastrar(Produto prod) throws Exception{
 		Connection connection = null;
 		PreparedStatement stm = null;
 		
@@ -21,7 +21,7 @@ public class ClienteDAO implements IClienteDAO {
 	    	connection = ConnectionFactory.getConnection();
 	    	String sql = getSqlInsert();
 	    	stm =  connection.prepareStatement(sql);
-	    	adicionarParametrosInsert(stm,cli);
+	    	adicionarParametrosInsert(stm,prod);
 	    	return stm.executeUpdate();
 	    }
 	    catch(Exception e) {
@@ -36,7 +36,7 @@ public class ClienteDAO implements IClienteDAO {
 
 
 	@Override
-	public Integer atualizar(Cliente cli) throws Exception {
+	public Integer atualizar(Produto cli) throws Exception {
 		Connection connection = null;
 		PreparedStatement stm = null;
 		 try {
@@ -57,10 +57,10 @@ public class ClienteDAO implements IClienteDAO {
 	};
 
 	@Override
-	public Cliente buscar(String code) throws Exception  {
+	public Produto buscar(String code) throws Exception  {
 		Connection connection = null;
 		PreparedStatement stm = null;
-		Cliente cli = null;
+		Produto prod = null;
 		ResultSet rs = null;
 		 try {
 			  connection = ConnectionFactory.getConnection();
@@ -70,13 +70,13 @@ public class ClienteDAO implements IClienteDAO {
 		    	rs = stm.executeQuery();
 		    	
 		    	if(rs.next()) {
-		    		cli = new Cliente();
+		    		prod = new Produto();
 		    		Long id = rs.getLong("ID");
-		    		String cpf= rs.getString("CPF");
+		    		String cod= rs.getString("CODIGO");
 		    		String nome = rs.getString("NOME");
-		    		cli.setId(id);
-		    		cli.setCpf(cpf);
-		    		cli.setNome(nome);
+		    		prod.setId(id);
+		    		prod.setCodigo(cod);
+		    		prod.setNome(nome);
 		    	}  	
 		    }
 		    catch(Exception e) {
@@ -84,19 +84,19 @@ public class ClienteDAO implements IClienteDAO {
 		    }finally {
 		    	//closeConnection(connection,stm,rs);
 		    	 }
-	  return cli;	    	
+	  return prod;	    	
 	};
 
 	
 	@Override
-	public Integer excluir(Cliente cli) throws Exception {
+	public Integer excluir(Produto prod) throws Exception {
 		Connection connection = null;
 		PreparedStatement stm = null;
 		 try {
 			 connection = ConnectionFactory.getConnection();
 		    	String sql = getSqlDelete();
 		    	stm =  connection.prepareStatement(sql);
-		    	adicionarParametrosDelete(stm,cli);
+		    	adicionarParametrosDelete(stm,prod);
 		    	return  stm.executeUpdate();
 		    	
 		    }
@@ -112,12 +112,12 @@ public class ClienteDAO implements IClienteDAO {
 	
 	
 	@Override
-	public List<Cliente> buscarTodos() throws Exception {
+	public List<Produto> buscarTodos() throws Exception {
 		Connection connection = null;
 		PreparedStatement stm = null;
-		Cliente cli = null;
+		Produto prod = null;
 		ResultSet rs = null;
-		List<Cliente> list = new ArrayList<>();
+		List<Produto> list = new ArrayList<>();
 		try {
 			 connection = ConnectionFactory.getConnection();
 		    	String sql = getSqlSelectAll();
@@ -125,14 +125,14 @@ public class ClienteDAO implements IClienteDAO {
 		    	rs = stm.executeQuery();
 		    	
 		    	while(rs.next()) {
-		    		cli = new Cliente();
+		    		prod = new Produto();
 		    		Long id = rs.getLong("ID");
 		    		String nome = rs.getString("NOME");
-		    		String cpf= rs.getString("CPF");
-		    		cli.setId(id);
-		    		cli.setCpf(cpf);
-		    		cli.setNome(nome);
-		    		list.add(cli);
+		    		String cod = rs.getString("CODIGO");
+		    		prod.setId(id);
+		    		prod.setCodigo(cod);
+		    		prod.setNome(nome);
+		    		list.add(prod);
 		    	}
 		    }
 		    catch(Exception e) {
@@ -147,29 +147,31 @@ public class ClienteDAO implements IClienteDAO {
 	
 	private String getSqlInsert() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO TB_CLIENTE (ID,CPF,NOME)");
-		sb.append("VALUES (nextval('sq_cliente'),?,?)");
+		sb.append("INSERT INTO TB_PRODUTO (ID,CODIGO,NOME,DESCRICAO,VALOR)");
+		sb.append("VALUES (nextval('sq_produto'),?,?,?,?)");
 		return sb.toString();
 	};
 	
 	
 	private String getSqlSelectAll() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT * FROM TB_CLIENTE");
+		sb.append("SELECT * FROM TB_PRODUTO");
 		return sb.toString();
 	};
 	
 	
-	private void adicionarParametrosInsert(PreparedStatement stm,Cliente cli) throws SQLException {
-		 stm.setString(1,cli.getCpf());
-		 stm.setString(2,cli.getNome());
+	private void adicionarParametrosInsert(PreparedStatement stm,Produto Prod) throws SQLException {
+		 stm.setString(1,Prod.getCodigo());
+		 stm.setString(2,Prod.getNome());
+		 stm.setString(3,Prod.getDescricao());
+		 stm.setBigDecimal(4,Prod.getValor());
 		};	
 	
 	
 	
 	private String getSqlSelect() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT * FROM TB_CLIENTE WHERE CPF = ?");
+		sb.append("SELECT * FROM TB_PRODUTO WHERE CODIGO = ?");
 	//	sb.append(" WHERE CODIGO = ?");
 		return sb.toString();
 	};
@@ -181,29 +183,29 @@ public class ClienteDAO implements IClienteDAO {
 	
 	private String getSqlUpdate() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("UPDATE TB_CLIENTE");
-		sb.append(" SET NOME = ?, CPF = ?");
+		sb.append("UPDATE TB_PRODUTO");
+		sb.append(" SET NOME = ?, CODIGO = ?");
 		sb.append("WHERE ID = ?");
 		return sb.toString();
 	}; 
 	
-	private void adicionarParametrosDelete(PreparedStatement stm,Cliente cli) throws SQLException {
-		 stm.setString(1,cli.getCpf());
+	private void adicionarParametrosDelete(PreparedStatement stm,Produto Prod) throws SQLException {
+		 stm.setString(1,Prod.getCodigo());
 		
 		}
 	
-	
+	 
 	private String getSqlDelete() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM TB_CLIENTE WHERE CPF = ?");
+		sb.append("DELETE FROM TB_PRODUTO WHERE CODIGO = ?");
 		//sb.append(" WHERE CODIGO = ?");
 		return sb.toString();
 	};
 	
-	private void adicionarParametrosUpdate(PreparedStatement stm,Cliente cli) throws SQLException {
-		 stm.setString(1,cli.getCpf());
-		 stm.setString(2,cli.getNome());
-		 stm.setLong(3,cli.getId());
+	private void adicionarParametrosUpdate(PreparedStatement stm,Produto Prod) throws SQLException {
+		 stm.setString(1,Prod.getCodigo());
+		 stm.setString(2,Prod.getNome());
+		 stm.setLong(3,Prod.getId());
 		}
 	
 	

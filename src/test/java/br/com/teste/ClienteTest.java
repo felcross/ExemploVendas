@@ -18,24 +18,35 @@ public class ClienteTest {
 		clienteDao = new ClienteDAO();
 		
 		Cliente cli = new Cliente();
-		cli.setCodigo("10");
+		cli.setCpf("20");
 		cli.setNome("clienteTeste");
-		System.out.println(cli.getCodigo()+"primeiro teste");
+		System.out.println(cli.getCpf()+"primeiro teste");
 		Integer countCad = clienteDao.cadastrar(cli);		
 		assertTrue(countCad == 1);
 		Cliente cli2 = new Cliente();	
-		 cli2 = clienteDao.buscar("10");
-		System.out.println(cli2.getCodigo());
-	 	assertNull(cli2);
-		assertEquals(cli.getCodigo(),cli2.getCodigo());
+		 cli2 = clienteDao.buscar("20");
+		System.out.println(cli2.getCpf());
+		assertEquals(cli.getCpf(),cli2.getCpf());
 		assertEquals(cli.getNome(),cli2.getNome());
 		
+	
+		
+		
+	}
+	
+	
+	@Test
+	public void excluir() throws Exception {
+		clienteDao = new ClienteDAO();
+		Cliente cli = new Cliente();	
+		cli = clienteDao.buscar("20");
+		System.out.println(cli.getCpf());
 		Integer countDel = clienteDao.excluir(cli);
 		assertTrue(countDel == 1);
 		System.out.println(); 
 		
 		
-	}
+	} 
 	
 	
 	

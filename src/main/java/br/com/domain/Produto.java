@@ -1,0 +1,79 @@
+package br.com.domain;
+
+import java.math.BigDecimal;
+
+import anotacao.ColunaTabela;
+import anotacao.Tabela;
+import anotacao.TipoChave;
+import br.com.dao.Persistente;
+
+@Tabela("TB_PRODUTO")
+public class Produto implements Persistente {
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
+    private Long id;
+	@TipoChave("getCodigo")
+	@ColunaTabela(dbName = "codigo", setJavaName = "setCodigo")
+    private String codigo;
+	@ColunaTabela(dbName = "nome", setJavaName = "setNome")
+    private String nome;
+	@ColunaTabela(dbName = "descricao", setJavaName = "setDescricao")
+	private String descricao;
+	@ColunaTabela(dbName = "valor", setJavaName = "setValor")
+	private BigDecimal valor;
+	
+	public Produto(Long id, String codigo, String nome, String descricao,  BigDecimal valor) {
+		super();
+		this.id = id;
+		this.codigo = codigo;
+		this.nome = nome;
+		this.descricao = descricao; 
+		this.valor = valor; 
+	}
+	
+	public Produto() {}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	};
+	
+    	
+	
+	
+	
+}
